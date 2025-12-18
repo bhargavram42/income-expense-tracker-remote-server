@@ -1,0 +1,18 @@
+# Python-generated files
+__pycache__/
+*.py[cod]
+*.pyo
+*.db
+*.sqlite3
+.env
+*.log
+.venv/
+venv/
+ENV/
+env/
+.env.*
+.vscode/
+.idea/
+node_modules/
+Thumbs.db
+.DS_Store
