@@ -1,3 +1,30 @@
+__pycache__/
+*.py[cod]
+*.pyo
+
+# Virtual environments
+.venv/
+venv/
+ENV/
+env/
+
+# Databases and environment
+*.db
+*.sqlite3
+.env
+*.log
+
+# Editors and OS
+.vscode/
+.idea/
+Thumbs.db
+.DS_Store
+
+# Node
+node_modules/
+
+# Python bytecode
+__pycache__/
 # Python-generated files
 __pycache__/
 *.py[cod]
