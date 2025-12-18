@@ -11,10 +11,10 @@ load_dotenv()
 
 SERVERS = { 
     "math": {
-        "transport": "http",
-        "command": sys.executable,
+        "transport": "streamable_http",
+        # "command": sys.executable,
         # "args": ["-u", r"C:\Users\MANGISETTY BHARGAV\python\MCP\fastmcp-demo-server\main.py"]
-        "args": ["-u", "https://scattered-coffee-shark.fastmcp.app/mcp"]
+        "url": "https://scattered-coffee-shark.fastmcp.app/mcp"
     }
 }
 
