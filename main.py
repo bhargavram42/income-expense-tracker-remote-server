@@ -2,40 +2,49 @@ from fastmcp import FastMCP
 import os
 import sqlite3
 
-DB_PATH = os.path.join(os.path.dirname(__file__), "expenses.db")
+import tempfile
+# Use temporary directory which should be writable
+TEMP_DIR = tempfile.gettempdir()
+DB_PATH = os.path.join(TEMP_DIR, "expenses.db")
 CATEGORIES_PATH = os.path.join(os.path.dirname(__file__), "categories.json")
+
+print(f"Database path: {DB_PATH}")
 
 mcp = FastMCP("ExpenseTracker")
 
 def init_db():
-    with sqlite3.connect(DB_PATH) as c:
-        c.execute("""
-            CREATE TABLE IF NOT EXISTS expenses(
-                id INTEGER PRIMARY KEY AUTOINCREMENT,
-                date TEXT NOT NULL,
-                amount REAL NOT NULL,
-                category TEXT NOT NULL,
-                subcategory TEXT DEFAULT '',
-                note TEXT DEFAULT ''
-            )
-        """)
+    try:
+        with sqlite3.connect(DB_PATH) as c:
+            c.execute("""
+                CREATE TABLE IF NOT EXISTS expenses(
+                    id INTEGER PRIMARY KEY AUTOINCREMENT,
+                    date TEXT NOT NULL,
+                    amount REAL NOT NULL,
+                    category TEXT NOT NULL,
+                    subcategory TEXT DEFAULT '',
+                    note TEXT DEFAULT ''
+                )
+            """)
 
-        c.execute("""
-            CREATE TABLE IF NOT EXISTS income(
-                id INTEGER PRIMARY KEY AUTOINCREMENT,
-                date TEXT NOT NULL,
-                amount REAL NOT NULL,
-                source TEXT NOT NULL,
-                note TEXT DEFAULT ''
-            )
-        """)
+            c.execute("""
+                CREATE TABLE IF NOT EXISTS income(
+                    id INTEGER PRIMARY KEY AUTOINCREMENT,
+                    date TEXT NOT NULL,
+                    amount REAL NOT NULL,
+                    source TEXT NOT NULL,
+                    note TEXT DEFAULT ''
+                )
+            """)
 
-        c.execute("""
-            CREATE TABLE IF NOT EXISTS budgets(
-                category TEXT PRIMARY KEY,
-                monthly_limit REAL NOT NULL
-            )
-        """)
+            c.execute("""
+                CREATE TABLE IF NOT EXISTS budgets(
+                    category TEXT PRIMARY KEY,
+                    monthly_limit REAL NOT NULL
+                )
+            """)
+    except Exception as e:
+        print(f"Database initialization error: {e}")
+        raise
 
 
 init_db()
